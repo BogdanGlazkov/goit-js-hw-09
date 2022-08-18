@@ -12,11 +12,12 @@ refs.form.addEventListener('submit', onCreatePromisesClick);
 function onCreatePromisesClick(event) {
   event.preventDefault();
 
-  const delay = refs.delayInput.value;
+  let delay = refs.delayInput.value;
   const step = refs.stepInput.value;
 
   for (let i = 0; i < refs.amountInput.value; i += 1) {
-    createPromise(i + 1, delay + step * i)
+    delay += step;
+    createPromise(i + 1, delay)
       .then(({ position, delay }) => {
         Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
