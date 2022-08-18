@@ -12,18 +12,18 @@ refs.form.addEventListener('submit', onCreatePromisesClick);
 function onCreatePromisesClick(event) {
   event.preventDefault();
 
-  let delay = refs.delayInput.value;
-  const step = refs.stepInput.value;
+  let delay = Number(refs.delayInput.value);
+  const step = Number(refs.stepInput.value);
 
   for (let i = 0; i < refs.amountInput.value; i += 1) {
-    delay += step;
     createPromise(i + 1, delay)
       .then(({ position, delay }) => {
         Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
       .catch(({ position, delay }) => {
         Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
-      });
+      })
+      .finally((delay += step));
   }
 }
 
